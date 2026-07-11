@@ -73,6 +73,10 @@ export function deleteWine(id) {
   return fetch(`${BASE_URL}/wines/${id}`, { method: "DELETE" }).then(handle);
 }
 
+export function deleteAllWines(tenantId) {
+  return fetch(`${BASE_URL}/tenants/${tenantId}/wines`, { method: "DELETE" }).then(handle);
+}
+
 export function importWinesCSV(tenantId, csvText) {
   return fetch(`${BASE_URL}/tenants/${tenantId}/wines/import`, {
     method: "POST",
