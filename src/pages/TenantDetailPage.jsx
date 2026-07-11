@@ -194,6 +194,58 @@ export default function TenantDetailPage() {
               </div>
             </div>
           </div>
+          <div className="row-flex">
+            <div>
+              <label>Kachel-Hintergrund</label>
+              <div className="color-row">
+                <input
+                  type="color"
+                  value={tenant.branding?.cardBackgroundColor || "#2a221c"}
+                  onChange={(e) =>
+                    setTenant({
+                      ...tenant,
+                      branding: { ...tenant.branding, cardBackgroundColor: e.target.value },
+                    })
+                  }
+                />
+                <input
+                  type="text"
+                  value={tenant.branding?.cardBackgroundColor || "#2a221c"}
+                  onChange={(e) =>
+                    setTenant({
+                      ...tenant,
+                      branding: { ...tenant.branding, cardBackgroundColor: e.target.value },
+                    })
+                  }
+                />
+              </div>
+            </div>
+            <div>
+              <label>Kachel-Schrift</label>
+              <div className="color-row">
+                <input
+                  type="color"
+                  value={tenant.branding?.cardTextColor || "#a89e94"}
+                  onChange={(e) =>
+                    setTenant({
+                      ...tenant,
+                      branding: { ...tenant.branding, cardTextColor: e.target.value },
+                    })
+                  }
+                />
+                <input
+                  type="text"
+                  value={tenant.branding?.cardTextColor || "#a89e94"}
+                  onChange={(e) =>
+                    setTenant({
+                      ...tenant,
+                      branding: { ...tenant.branding, cardTextColor: e.target.value },
+                    })
+                  }
+                />
+              </div>
+            </div>
+          </div>
 
           <label>
             <input

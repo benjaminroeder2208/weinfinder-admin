@@ -8,6 +8,8 @@ const DEFAULT_BRANDING = {
   headingColor: "#f2ede8",
   primaryColor: "#a0bd00",
   secondaryColor: "#8b2615",
+  cardBackgroundColor: "#2a221c",
+  cardTextColor: "#a89e94",
 };
 
 export default function TenantNewPage() {
@@ -134,6 +136,38 @@ export default function TenantNewPage() {
               </div>
             </div>
           </div>
+          <div className="row-flex">
+            <div>
+              <label>Kachel-Hintergrund</label>
+              <div className="color-row">
+                <input
+                  type="color"
+                  value={branding.cardBackgroundColor}
+                  onChange={(e) => setColor("cardBackgroundColor", e.target.value)}
+                />
+                <input
+                  type="text"
+                  value={branding.cardBackgroundColor}
+                  onChange={(e) => setColor("cardBackgroundColor", e.target.value)}
+                />
+              </div>
+            </div>
+            <div>
+              <label>Kachel-Schrift</label>
+              <div className="color-row">
+                <input
+                  type="color"
+                  value={branding.cardTextColor}
+                  onChange={(e) => setColor("cardTextColor", e.target.value)}
+                />
+                <input
+                  type="text"
+                  value={branding.cardTextColor}
+                  onChange={(e) => setColor("cardTextColor", e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
 
           <div className="form-actions">
             <button className="btn" type="submit" disabled={saving}>
@@ -145,4 +179,3 @@ export default function TenantNewPage() {
     </div>
   );
 }
-
