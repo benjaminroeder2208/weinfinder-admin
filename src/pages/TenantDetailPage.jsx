@@ -54,6 +54,9 @@ export default function TenantDetailPage() {
   if (error) return <div className="error-box">{error}</div>;
   if (!tenant) return <p>Lädt...</p>;
 
+  const publicUrl = `https://app.premium-weinfinder.de/w/${tenant.slug}`;
+  const iframeSnippet = `<iframe src="${publicUrl}" style="width:100%; height:800px; border:none;" title="Weinfinder"></iframe>`;
+
   return (
     <div>
       <div className="toolbar">
@@ -65,6 +68,35 @@ export default function TenantDetailPage() {
           <Link className="btn" to={`/tenants/${id}/wines`}>
             Weine verwalten →
           </Link>
+        </div>
+      </div>
+
+      <div className="card">
+        <h3 style={{ marginTop: 0 }}>Einbindung</h3>
+
+        <label>Link zum Weinfinder</label>
+        <div className="row-flex">
+          <input readOnly value={publicUrl} onClick={(e) => e.target.select()} />
+          <a className="btn btn-secondary" href={publicUrl} target="_blank" rel="noreferrer">
+            Öffnen
+          </a>
+        </div>
+
+        <label style={{ marginTop: 16 }}>iFrame-Einbettungscode</label>
+        <textarea
+          readOnly
+          value={iframeSnippet}
+          onClick={(e) => e.target.select()}
+          style={{ fontFamily: "monospace", fontSize: "0.8rem", minHeight: 60 }}
+        />
+        <div className="form-actions">
+          <button
+            className="btn btn-secondary"
+            type="button"
+            onClick={() => navigator.clipboard.writeText(iframeSnippet)}
+          >
+            Code kopieren
+          </button>
         </div>
       </div>
 
