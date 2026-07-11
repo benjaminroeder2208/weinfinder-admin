@@ -16,7 +16,7 @@ export default function TenantNewPage() {
   const navigate = useNavigate();
   const [slug, setSlug] = useState("");
   const [name, setName] = useState("");
-  const [pricingTier, setPricingTier] = useState("basis");
+  const [pricingTier, setPricingTier] = useState("demo");
   const [branding, setBranding] = useState(DEFAULT_BRANDING);
   const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
@@ -61,7 +61,13 @@ export default function TenantNewPage() {
           <select value={pricingTier} onChange={(e) => setPricingTier(e.target.value)}>
             <option value="basis">Basis</option>
             <option value="premium">Premium</option>
+            <option value="demo">Demo</option>
+            <option value="pilot">Pilot</option>
+            <option value="enterprise">Enterprise</option>
           </select>
+          <p style={{ fontSize: "0.8rem", marginTop: 4 }}>
+            Lead-Gen-Formular ist bei „Basis" und „Pilot" ausgeblendet, sonst sichtbar.
+          </p>
 
           <h3 style={{ marginTop: 24 }}>Farben</h3>
           <div className="row-flex">
@@ -186,3 +192,4 @@ export default function TenantNewPage() {
     </div>
   );
 }
+

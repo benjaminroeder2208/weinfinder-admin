@@ -41,7 +41,7 @@ export default function TenantsPage() {
               <td>{t.slug}</td>
               <td>
                 <span className="badge">
-                  {t.pricing_tier === "premium" ? "Premium" : "Basis"}
+                  {{ basis: "Basis", premium: "Premium", demo: "Demo", pilot: "Pilot", enterprise: "Enterprise" }[t.pricing_tier] || "Demo"}
                 </span>
               </td>
               <td>

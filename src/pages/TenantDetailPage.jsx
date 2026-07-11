@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getTenant, updateTenant, getAnalytics } from "../api/client.js";
+import { getTenant, updateTenant, getAnalytics, getTenants } from "../api/client.js";
 
 export default function TenantDetailPage() {
   const { id } = useParams();
   const [tenant, setTenant] = useState(null);
   const [analytics, setAnalytics] = useState(null);
+  const [allTenants, setAllTenants] = useState([]);
   const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
   const [savedMsg, setSavedMsg] = useState(false);
@@ -29,6 +30,7 @@ export default function TenantDetailPage() {
       )
       .catch((err) => setError(err.message));
     getAnalytics(id).then(setAnalytics).catch(() => setAnalytics(null));
+    getTenants().then(setAllTenants).catch(() => setAllTenants([]));
   }, [id]);
 
   async function handleSave(e) {
@@ -42,6 +44,7 @@ export default function TenantDetailPage() {
         branding: tenant.branding,
         content: tenant.content,
         pricing_tier: tenant.pricing_tier,
+        demo_sources: tenant.demo_sources || [],
       });
       setTenant(updated);
       setSavedMsg(true);
@@ -116,15 +119,72 @@ export default function TenantDetailPage() {
 
           <label>Paket</label>
           <select
-            value={tenant.pricing_tier || "basis"}
+            value={tenant.pricing_tier || "demo"}
             onChange={(e) => setTenant({ ...tenant, pricing_tier: e.target.value })}
           >
             <option value="basis">Basis</option>
             <option value="premium">Premium</option>
+            <option value="demo">Demo</option>
+            <option value="pilot">Pilot</option>
+            <option value="enterprise">Enterprise</option>
           </select>
           <p style={{ fontSize: "0.8rem", marginTop: 4 }}>
-            Im Basis-Paket wird das E-Mail-Lead-Formular auf der Ergebnisseite nicht angezeigt.
+            Lead-Gen-Formular ist bei „Basis" und „Pilot" ausgeblendet, sonst sichtbar.
           </p>
+
+          {tenant.pricing_tier === "demo" && (
+            <>
+              <label style={{ marginTop: 16 }}>
+                Kunden, deren Weine im Demo-Dropdown wählbar sind
+              </label>
+              <div
+                style={{
+                  border: "1px solid var(--color-border)",
+                  borderRadius: 8,
+                  padding: 12,
+                  maxHeight: 200,
+                  overflowY: "auto",
+                }}
+              >
+                {allTenants
+                  .filter((t) => t.id !== tenant.id)
+                  .map((t) => {
+                    const checked = (tenant.demo_sources || []).includes(t.slug);
+                    return (
+                      <label
+                        key={t.id}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 8,
+                          fontSize: "0.9rem",
+                          marginTop: 4,
+                        }}
+                      >
+                        <input
+                          type="checkbox"
+                          style={{ width: "auto" }}
+                          checked={checked}
+                          onChange={(e) => {
+                            const current = tenant.demo_sources || [];
+                            const next = e.target.checked
+                              ? [...current, t.slug]
+                              : current.filter((s) => s !== t.slug);
+                            setTenant({ ...tenant, demo_sources: next });
+                          }}
+                        />
+                        {t.name} ({t.slug})
+                      </label>
+                    );
+                  })}
+                {allTenants.length <= 1 && (
+                  <p style={{ fontSize: "0.85rem", margin: 0 }}>
+                    Keine weiteren Kunden vorhanden.
+                  </p>
+                )}
+              </div>
+            </>
+          )}
 
           <h3 style={{ marginTop: 24 }}>Farben</h3>
           <div className="row-flex">
