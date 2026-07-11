@@ -59,17 +59,76 @@ export default function TenantDetailPage() {
           <label>Slug</label>
           <input value={tenant.slug} disabled />
 
-          <label>Primärfarbe</label>
-          <input
-            type="color"
-            value={tenant.branding?.primaryColor || "#a0bd00"}
-            onChange={(e) =>
-              setTenant({
-                ...tenant,
-                branding: { ...tenant.branding, primaryColor: e.target.value },
-              })
-            }
-          />
+          <h3 style={{ marginTop: 24 }}>Farben</h3>
+          <div className="row-flex">
+            <div>
+              <label>Hintergrund</label>
+              <input
+                type="color"
+                value={tenant.branding?.backgroundColor || "#1c1612"}
+                onChange={(e) =>
+                  setTenant({
+                    ...tenant,
+                    branding: { ...tenant.branding, backgroundColor: e.target.value },
+                  })
+                }
+              />
+            </div>
+            <div>
+              <label>Überschriften</label>
+              <input
+                type="color"
+                value={tenant.branding?.headingColor || "#f2ede8"}
+                onChange={(e) =>
+                  setTenant({
+                    ...tenant,
+                    branding: { ...tenant.branding, headingColor: e.target.value },
+                  })
+                }
+              />
+            </div>
+            <div>
+              <label>Text</label>
+              <input
+                type="color"
+                value={tenant.branding?.textColor || "#f2ede8"}
+                onChange={(e) =>
+                  setTenant({
+                    ...tenant,
+                    branding: { ...tenant.branding, textColor: e.target.value },
+                  })
+                }
+              />
+            </div>
+          </div>
+          <div className="row-flex">
+            <div>
+              <label>Primärfarbe</label>
+              <input
+                type="color"
+                value={tenant.branding?.primaryColor || "#a0bd00"}
+                onChange={(e) =>
+                  setTenant({
+                    ...tenant,
+                    branding: { ...tenant.branding, primaryColor: e.target.value },
+                  })
+                }
+              />
+            </div>
+            <div>
+              <label>Sekundärfarbe</label>
+              <input
+                type="color"
+                value={tenant.branding?.secondaryColor || "#8b2615"}
+                onChange={(e) =>
+                  setTenant({
+                    ...tenant,
+                    branding: { ...tenant.branding, secondaryColor: e.target.value },
+                  })
+                }
+              />
+            </div>
+          </div>
 
           <label>
             <input
