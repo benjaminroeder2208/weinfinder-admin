@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getTenantWines, deleteWine } from "../api/client.js";
+import { getTenantWines, deleteWine, importWinesCSV } from "../api/client.js";
 
 export default function WinesPage() {
   const { id } = useParams();
   const [wines, setWines] = useState(null);
   const [error, setError] = useState(null);
+  const [importResult, setImportResult] = useState(null);
+  const [importing, setImporting] = useState(false);
+  const fileInputRef = useRef(null);
 
   function load() {
     getTenantWines(id).then(setWines).catch((err) => setError(err.message));
@@ -23,6 +26,29 @@ export default function WinesPage() {
     }
   }
 
+  function handleImportClick() {
+    fileInputRef.current?.click();
+  }
+
+  async function handleFileChange(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImporting(true);
+    setImportResult(null);
+    setError(null);
+    try {
+      const text = await file.text();
+      const result = await importWinesCSV(id, text);
+      setImportResult(result);
+      load();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setImporting(false);
+      e.target.value = "";
+    }
+  }
+
   if (error) return <div className="error-box">{error}</div>;
   if (!wines) return <p>Lädt...</p>;
 
@@ -30,10 +56,42 @@ export default function WinesPage() {
     <div>
       <div className="toolbar">
         <h1>Weine</h1>
-        <Link className="btn" to={`/tenants/${id}/wines/new`}>
-          + Neuer Wein
-        </Link>
+        <div style={{ display: "flex", gap: 8 }}>
+          <a className="btn btn-secondary" href={`/api/admin/tenants/${id}/wines/export`}>
+            CSV exportieren
+          </a>
+          <button className="btn btn-secondary" onClick={handleImportClick} disabled={importing}>
+            {importing ? "Importiert..." : "CSV importieren"}
+          </button>
+          <input
+            type="file"
+            accept=".csv"
+            ref={fileInputRef}
+            style={{ display: "none" }}
+            onChange={handleFileChange}
+          />
+          <Link className="btn" to={`/tenants/${id}/wines/new`}>
+            + Neuer Wein
+          </Link>
+        </div>
       </div>
+
+      {importResult && (
+        <div className="card">
+          <strong>{importResult.imported} Weine importiert</strong>
+          {importResult.failed > 0 && (
+            <>
+              <p style={{ color: "#e88" }}>{importResult.failed} fehlgeschlagen:</p>
+              <ul style={{ fontSize: "0.85rem" }}>
+                {importResult.errors.map((e, i) => (
+                  <li key={i}>{e}</li>
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
+      )}
+
       <table>
         <thead>
           <tr>

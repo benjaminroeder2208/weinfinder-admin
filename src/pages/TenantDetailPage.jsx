@@ -11,7 +11,23 @@ export default function TenantDetailPage() {
   const [savedMsg, setSavedMsg] = useState(false);
 
   useEffect(() => {
-    getTenant(id).then(setTenant).catch((err) => setError(err.message));
+    getTenant(id)
+      .then((data) =>
+        setTenant({
+          ...data,
+          content: {
+            headline: "Weinfinder",
+            subheadlineTemplate: "Finde den Wein, der wirklich zu deinem Geschmack passt.",
+            description:
+              "Beantworte wenige kurze Fragen und erhalte eine persönliche Weinempfehlung – fast wie im Gespräch mit einem Sommelier.",
+            ctaLabel: "Weinberatung starten",
+            ctaSupportText: "Schnell, einfach und individuell",
+            logoUrl: "",
+            ...data.content,
+          },
+        })
+      )
+      .catch((err) => setError(err.message));
     getAnalytics(id).then(setAnalytics).catch(() => setAnalytics(null));
   }, [id]);
 
@@ -24,6 +40,7 @@ export default function TenantDetailPage() {
         name: tenant.name,
         active: tenant.active,
         branding: tenant.branding,
+        content: tenant.content,
       });
       setTenant(updated);
       setSavedMsg(true);
@@ -263,6 +280,75 @@ export default function TenantDetailPage() {
             </button>
           </div>
         </form>
+      </div>
+
+      <div className="card">
+        <h3 style={{ marginTop: 0 }}>Startseite</h3>
+        <label>Logo-URL (leer lassen für Standard-Weinglas-Icon)</label>
+        <input
+          value={tenant.content.logoUrl}
+          onChange={(e) =>
+            setTenant({ ...tenant, content: { ...tenant.content, logoUrl: e.target.value } })
+          }
+          placeholder="https://..."
+        />
+
+        <label>Überschrift</label>
+        <input
+          value={tenant.content.headline}
+          onChange={(e) =>
+            setTenant({ ...tenant, content: { ...tenant.content, headline: e.target.value } })
+          }
+        />
+
+        <label>Unterüberschrift</label>
+        <input
+          value={tenant.content.subheadlineTemplate}
+          onChange={(e) =>
+            setTenant({
+              ...tenant,
+              content: { ...tenant.content, subheadlineTemplate: e.target.value },
+            })
+          }
+        />
+
+        <label>Beschreibungstext</label>
+        <textarea
+          value={tenant.content.description}
+          onChange={(e) =>
+            setTenant({ ...tenant, content: { ...tenant.content, description: e.target.value } })
+          }
+        />
+
+        <div className="row-flex">
+          <div>
+            <label>Button-Text</label>
+            <input
+              value={tenant.content.ctaLabel}
+              onChange={(e) =>
+                setTenant({ ...tenant, content: { ...tenant.content, ctaLabel: e.target.value } })
+              }
+            />
+          </div>
+          <div>
+            <label>Text unter dem Button</label>
+            <input
+              value={tenant.content.ctaSupportText}
+              onChange={(e) =>
+                setTenant({
+                  ...tenant,
+                  content: { ...tenant.content, ctaSupportText: e.target.value },
+                })
+              }
+            />
+          </div>
+        </div>
+
+        <div className="form-actions">
+          <button className="btn" onClick={handleSave} disabled={saving}>
+            {saving ? "Speichert..." : "Speichern"}
+          </button>
+        </div>
       </div>
 
       <div className="card">
