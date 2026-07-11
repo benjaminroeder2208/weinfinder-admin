@@ -41,9 +41,14 @@ export default function TenantDetailPage() {
     <div>
       <div className="toolbar">
         <h1>{tenant.name}</h1>
-        <Link className="btn" to={`/tenants/${id}/wines`}>
-          Weine verwalten →
-        </Link>
+        <div style={{ display: "flex", gap: 8 }}>
+          <Link className="btn btn-secondary" to={`/tenants/${id}/quiz`}>
+            Quiz-Fragen bearbeiten
+          </Link>
+          <Link className="btn" to={`/tenants/${id}/wines`}>
+            Weine verwalten →
+          </Link>
+        </div>
       </div>
 
       <div className="card">
