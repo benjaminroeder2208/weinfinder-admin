@@ -28,6 +28,7 @@ export default function TenantsPage() {
           <tr>
             <th>Name</th>
             <th>Slug</th>
+            <th>Paket</th>
             <th>Status</th>
             <th>Erstellt</th>
             <th></th>
@@ -38,6 +39,11 @@ export default function TenantsPage() {
             <tr key={t.id}>
               <td>{t.name}</td>
               <td>{t.slug}</td>
+              <td>
+                <span className="badge">
+                  {t.pricing_tier === "premium" ? "Premium" : "Basis"}
+                </span>
+              </td>
               <td>
                 <span className={`badge ${t.active ? "badge-active" : ""}`}>
                   {t.active ? "aktiv" : "inaktiv"}

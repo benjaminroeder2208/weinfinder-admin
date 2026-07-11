@@ -16,6 +16,7 @@ export default function TenantNewPage() {
   const navigate = useNavigate();
   const [slug, setSlug] = useState("");
   const [name, setName] = useState("");
+  const [pricingTier, setPricingTier] = useState("basis");
   const [branding, setBranding] = useState(DEFAULT_BRANDING);
   const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
@@ -29,7 +30,7 @@ export default function TenantNewPage() {
     setError(null);
     setSaving(true);
     try {
-      const tenant = await createTenant({ slug, name, branding });
+      const tenant = await createTenant({ slug, name, branding, pricing_tier: pricingTier });
       navigate(`/tenants/${tenant.id}`);
     } catch (err) {
       setError(err.message);
@@ -55,6 +56,12 @@ export default function TenantNewPage() {
             }
             required
           />
+
+          <label>Paket</label>
+          <select value={pricingTier} onChange={(e) => setPricingTier(e.target.value)}>
+            <option value="basis">Basis</option>
+            <option value="premium">Premium</option>
+          </select>
 
           <h3 style={{ marginTop: 24 }}>Farben</h3>
           <div className="row-flex">

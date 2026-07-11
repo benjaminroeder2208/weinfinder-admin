@@ -41,6 +41,7 @@ export default function TenantDetailPage() {
         active: tenant.active,
         branding: tenant.branding,
         content: tenant.content,
+        pricing_tier: tenant.pricing_tier,
       });
       setTenant(updated);
       setSavedMsg(true);
@@ -112,6 +113,18 @@ export default function TenantDetailPage() {
 
           <label>Slug</label>
           <input value={tenant.slug} disabled />
+
+          <label>Paket</label>
+          <select
+            value={tenant.pricing_tier || "basis"}
+            onChange={(e) => setTenant({ ...tenant, pricing_tier: e.target.value })}
+          >
+            <option value="basis">Basis</option>
+            <option value="premium">Premium</option>
+          </select>
+          <p style={{ fontSize: "0.8rem", marginTop: 4 }}>
+            Im Basis-Paket wird das E-Mail-Lead-Formular auf der Ergebnisseite nicht angezeigt.
+          </p>
 
           <h3 style={{ marginTop: 24 }}>Farben</h3>
           <div className="row-flex">
