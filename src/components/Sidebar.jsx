@@ -18,6 +18,9 @@ export default function Sidebar({ onLogout }) {
         <NavLink to="/tenants" className={({ isActive }) => (isActive ? "active" : "")}>
           Shops
         </NavLink>
+        <NavLink to="/settings" className={({ isActive }) => (isActive ? "active" : "")}>
+          Einstellungen
+        </NavLink>
       </div>
       <a onClick={handleLogout} style={{ cursor: "pointer" }}>
         ← Logout

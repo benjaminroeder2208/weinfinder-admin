@@ -32,6 +32,12 @@ export default function TenantDetailPage() {
             enabled: false,
             ...data.email_config,
           },
+          legal_config: {
+            postalAddress: "",
+            privacyPolicyUrl: "",
+            retentionMonths: 6,
+            ...data.legal_config,
+          },
         })
       )
       .catch((err) => setError(err.message));
@@ -52,6 +58,7 @@ export default function TenantDetailPage() {
         pricing_tier: tenant.pricing_tier,
         demo_sources: tenant.demo_sources || [],
         email_config: tenant.email_config,
+        legal_config: tenant.legal_config,
       });
       setTenant(updated);
       setSavedMsg(true);
@@ -446,6 +453,64 @@ export default function TenantDetailPage() {
             </button>
           </div>
         </form>
+      </div>
+
+      <div className="card">
+        <h3 style={{ marginTop: 0 }}>Rechtliches</h3>
+        <p style={{ fontSize: "0.85rem" }}>
+          Diese Angaben füllen die automatisch generierte Datenschutzseite unter{" "}
+          <code>/w/{tenant.slug}/datenschutz</code>.
+        </p>
+
+        <label>Postadresse des Kunden</label>
+        <textarea
+          value={tenant.legal_config?.postalAddress || ""}
+          onChange={(e) =>
+            setTenant({
+              ...tenant,
+              legal_config: { ...tenant.legal_config, postalAddress: e.target.value },
+            })
+          }
+          placeholder={"Weingut Musterfirma\nMusterstraße 1\n12345 Musterstadt"}
+        />
+
+        <label>Eigene Datenschutzerklärung-URL (optional)</label>
+        <input
+          value={tenant.legal_config?.privacyPolicyUrl || ""}
+          onChange={(e) =>
+            setTenant({
+              ...tenant,
+              legal_config: { ...tenant.legal_config, privacyPolicyUrl: e.target.value },
+            })
+          }
+          placeholder="https://weingut-beispiel.de/datenschutz"
+        />
+        <p style={{ fontSize: "0.8rem" }}>
+          Falls gesetzt, verlinkt das Einwilligungsformular hierhin statt auf
+          die automatisch generierte Seite.
+        </p>
+
+        <label>Speicherdauer für Leads (Monate)</label>
+        <input
+          type="number"
+          min="1"
+          value={tenant.legal_config?.retentionMonths || 6}
+          onChange={(e) =>
+            setTenant({
+              ...tenant,
+              legal_config: {
+                ...tenant.legal_config,
+                retentionMonths: parseInt(e.target.value, 10) || 6,
+              },
+            })
+          }
+        />
+
+        <div className="form-actions">
+          <button className="btn" onClick={handleSave} disabled={saving}>
+            {saving ? "Speichert..." : "Speichern"}
+          </button>
+        </div>
       </div>
 
       <div className="card">

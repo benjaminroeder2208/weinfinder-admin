@@ -8,6 +8,7 @@ import TenantNewPage from "./pages/TenantNewPage.jsx";
 import TenantDetailPage from "./pages/TenantDetailPage.jsx";
 import QuizEditorPage from "./pages/QuizEditorPage.jsx";
 import LeadsPage from "./pages/LeadsPage.jsx";
+import SettingsPage from "./pages/SettingsPage.jsx";
 import WinesPage from "./pages/WinesPage.jsx";
 import WineFormPage from "./pages/WineFormPage.jsx";
 
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="/tenants/:id" element={<TenantDetailPage />} />
           <Route path="/tenants/:id/quiz" element={<QuizEditorPage />} />
           <Route path="/tenants/:id/leads" element={<LeadsPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
           <Route path="/tenants/:id/wines" element={<WinesPage />} />
           <Route path="/tenants/:id/wines/new" element={<WineFormPage />} />
           <Route path="/tenants/:id/wines/:wineId" element={<WineFormPage />} />

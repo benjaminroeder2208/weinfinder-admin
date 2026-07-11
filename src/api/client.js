@@ -9,6 +9,18 @@ async function handle(res) {
   return body;
 }
 
+export function getSettings() {
+  return fetch(`${BASE_URL}/settings`).then(handle);
+}
+
+export function updateSettings(data) {
+  return fetch(`${BASE_URL}/settings`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  }).then(handle);
+}
+
 export function login(email, password) {
   return fetch(`${BASE_URL}/login`, {
     method: "POST",
