@@ -89,6 +89,14 @@ export function getLeads(tenantId) {
   return fetch(`${BASE_URL}/tenants/${tenantId}/leads`).then(handle);
 }
 
+export function deleteLead(id) {
+  return fetch(`${BASE_URL}/leads/${id}`, { method: "DELETE" }).then(handle);
+}
+
+export function deleteAllLeads(tenantId) {
+  return fetch(`${BASE_URL}/tenants/${tenantId}/leads`, { method: "DELETE" }).then(handle);
+}
+
 export function getAnalytics(tenantId) {
   return fetch(`${BASE_URL}/tenants/${tenantId}/analytics`).then(handle);
 }
