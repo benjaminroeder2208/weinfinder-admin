@@ -39,6 +39,7 @@ export default function LeadsPage() {
             <tr>
               <th>E-Mail</th>
               <th>Empfohlener Wein</th>
+              <th>Status</th>
               <th>Datum</th>
             </tr>
           </thead>
@@ -47,6 +48,15 @@ export default function LeadsPage() {
               <tr key={l.id}>
                 <td>{l.email}</td>
                 <td>{l.wine_name || "–"}</td>
+                <td>
+                  {l.unsubscribed ? (
+                    <span className="badge">Abgemeldet</span>
+                  ) : l.confirmed ? (
+                    <span className="badge badge-active">Bestätigt</span>
+                  ) : (
+                    <span className="badge">Ausstehend</span>
+                  )}
+                </td>
                 <td>{new Date(l.created_at).toLocaleString("de-DE")}</td>
               </tr>
             ))}
