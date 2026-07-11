@@ -70,7 +70,7 @@ export default function TenantDetailPage() {
             Quiz-Fragen bearbeiten
           </Link>
           <Link className="btn" to={`/tenants/${id}/wines`}>
-            Weine verwalten →
+            Weine verwalten
           </Link>
         </div>
       </div>

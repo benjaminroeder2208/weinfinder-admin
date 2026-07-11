@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getTenantWines, deleteWine, importWinesCSV } from "../api/client.js";
+import { getTenantWines, deleteWine, importWinesCSV, getTenant } from "../api/client.js";
 
 export default function WinesPage() {
   const { id } = useParams();
   const [wines, setWines] = useState(null);
+  const [tenant, setTenant] = useState(null);
   const [error, setError] = useState(null);
   const [importResult, setImportResult] = useState(null);
   const [importing, setImporting] = useState(false);
@@ -13,6 +14,10 @@ export default function WinesPage() {
   function load() {
     getTenantWines(id).then(setWines).catch((err) => setError(err.message));
   }
+
+  useEffect(() => {
+    getTenant(id).then(setTenant).catch(() => setTenant(null));
+  }, [id]);
 
   useEffect(load, [id]);
 
@@ -54,8 +59,14 @@ export default function WinesPage() {
 
   return (
     <div>
-      <div className="toolbar">
-        <h1>Weine</h1>
+      <Link
+        to={`/tenants/${id}`}
+        style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", textDecoration: "none" }}
+      >
+        ← {tenant?.name || "Shop"}
+      </Link>
+      <div className="toolbar" style={{ marginTop: 8 }}>
+        <h1>Weine – {tenant?.name || "..."}</h1>
         <div style={{ display: "flex", gap: 8 }}>
           <a className="btn btn-secondary" href={`/api/admin/tenants/${id}/wines/export`}>
             CSV exportieren

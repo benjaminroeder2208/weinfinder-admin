@@ -50,9 +50,18 @@ export default function TenantsPage() {
                 </span>
               </td>
               <td>{new Date(t.created_at).toLocaleDateString("de-DE")}</td>
-              <td>
-                <Link className="btn btn-secondary" to={`/tenants/${t.id}`}>
+              <td style={{ whiteSpace: "nowrap" }}>
+                <a
+                  className="btn btn-secondary"
+                  href={`https://app.premium-weinfinder.de/w/${t.slug}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ marginRight: 8 }}
+                >
                   Öffnen
+                </a>
+                <Link className="btn" to={`/tenants/${t.id}`}>
+                  Admin
                 </Link>
               </td>
             </tr>
