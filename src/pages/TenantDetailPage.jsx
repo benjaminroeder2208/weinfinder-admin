@@ -69,6 +69,11 @@ export default function TenantDetailPage() {
           <Link className="btn btn-secondary" to={`/tenants/${id}/quiz`}>
             Quiz-Fragen bearbeiten
           </Link>
+          {!["basis", "pilot"].includes(tenant.pricing_tier) && (
+            <Link className="btn btn-secondary" to={`/tenants/${id}/leads`}>
+              Leads ansehen
+            </Link>
+          )}
           <Link className="btn" to={`/tenants/${id}/wines`}>
             Weine verwalten
           </Link>

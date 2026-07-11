@@ -85,6 +85,10 @@ export function importWinesCSV(tenantId, csvText) {
   }).then(handle);
 }
 
+export function getLeads(tenantId) {
+  return fetch(`${BASE_URL}/tenants/${tenantId}/leads`).then(handle);
+}
+
 export function getAnalytics(tenantId) {
   return fetch(`${BASE_URL}/tenants/${tenantId}/analytics`).then(handle);
 }
