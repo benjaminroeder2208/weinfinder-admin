@@ -26,6 +26,12 @@ export default function TenantDetailPage() {
             logoUrl: "",
             ...data.content,
           },
+          email_config: {
+            senderName: "",
+            replyTo: "",
+            enabled: false,
+            ...data.email_config,
+          },
         })
       )
       .catch((err) => setError(err.message));
@@ -45,6 +51,7 @@ export default function TenantDetailPage() {
         content: tenant.content,
         pricing_tier: tenant.pricing_tier,
         demo_sources: tenant.demo_sources || [],
+        email_config: tenant.email_config,
       });
       setTenant(updated);
       setSavedMsg(true);
@@ -136,6 +143,59 @@ export default function TenantDetailPage() {
           <p style={{ fontSize: "0.8rem", marginTop: 4 }}>
             Lead-Gen-Formular ist bei „Basis" und „Pilot" ausgeblendet, sonst sichtbar.
           </p>
+
+          {["demo", "premium", "enterprise"].includes(tenant.pricing_tier) && (
+            <>
+              <h3 style={{ marginTop: 24 }}>E-Mail-Versand</h3>
+              <label style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <input
+                  type="checkbox"
+                  style={{ width: "auto" }}
+                  checked={tenant.email_config?.enabled || false}
+                  onChange={(e) =>
+                    setTenant({
+                      ...tenant,
+                      email_config: { ...tenant.email_config, enabled: e.target.checked },
+                    })
+                  }
+                />
+                Automatischen Mailversand an Leads aktivieren
+              </label>
+
+              <label style={{ marginTop: 12 }}>Absendername</label>
+              <div className="row-flex" style={{ alignItems: "center" }}>
+                <input
+                  value={tenant.email_config?.senderName || ""}
+                  onChange={(e) =>
+                    setTenant({
+                      ...tenant,
+                      email_config: {
+                        ...tenant.email_config,
+                        senderName: e.target.value.toLowerCase().replace(/[^a-z0-9.-]/g, ""),
+                      },
+                    })
+                  }
+                  placeholder="z.B. anette"
+                />
+                <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>
+                  @service.premium-weinfinder.de
+                </span>
+              </div>
+
+              <label>Reply-To-Adresse (Antworten landen hier)</label>
+              <input
+                type="email"
+                value={tenant.email_config?.replyTo || ""}
+                onChange={(e) =>
+                  setTenant({
+                    ...tenant,
+                    email_config: { ...tenant.email_config, replyTo: e.target.value },
+                  })
+                }
+                placeholder="info@weingut-beispiel.de"
+              />
+            </>
+          )}
 
           {tenant.pricing_tier === "demo" && (
             <>
