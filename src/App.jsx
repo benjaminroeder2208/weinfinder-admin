@@ -32,7 +32,7 @@ export default function App() {
 
   return (
     <div className="layout">
-      <Sidebar />
+      <Sidebar onLogout={() => setAuthenticated(false)} />
       <div className="content">
         <Routes>
           <Route path="/" element={<Navigate to="/tenants" replace />} />

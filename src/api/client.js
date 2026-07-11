@@ -17,6 +17,10 @@ export function login(email, password) {
   }).then(handle);
 }
 
+export function logout() {
+  return fetch(`${BASE_URL}/logout`, { method: "POST" }).then(handle);
+}
+
 export function getTenants() {
   return fetch(`${BASE_URL}/tenants`).then(handle);
 }
