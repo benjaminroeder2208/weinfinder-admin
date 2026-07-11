@@ -215,7 +215,28 @@ textarea {
   background: var(--color-border);
 }
 
+.color-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.color-row input[type="color"] {
+  width: 44px;
+  height: 38px;
+  padding: 2px;
+  flex: none;
+  cursor: pointer;
+}
+
+.color-row input[type="text"] {
+  flex: 1;
+  font-family: monospace;
+  text-transform: uppercase;
+}
+
 .badge-active {
   background: var(--color-accent);
   color: #1c1612;
 }
+

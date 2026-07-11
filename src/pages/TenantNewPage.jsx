@@ -58,45 +58,80 @@ export default function TenantNewPage() {
           <div className="row-flex">
             <div>
               <label>Hintergrund</label>
-              <input
-                type="color"
-                value={branding.backgroundColor}
-                onChange={(e) => setColor("backgroundColor", e.target.value)}
-              />
+              <div className="color-row">
+                <input
+                  type="color"
+                  value={branding.backgroundColor}
+                  onChange={(e) => setColor("backgroundColor", e.target.value)}
+                />
+                <input
+                  type="text"
+                  value={branding.backgroundColor}
+                  onChange={(e) => setColor("backgroundColor", e.target.value)}
+                />
+              </div>
             </div>
             <div>
               <label>Überschriften</label>
-              <input
-                type="color"
-                value={branding.headingColor}
-                onChange={(e) => setColor("headingColor", e.target.value)}
-              />
+              <div className="color-row">
+                <input
+                  type="color"
+                  value={branding.headingColor}
+                  onChange={(e) => setColor("headingColor", e.target.value)}
+                />
+                <input
+                  type="text"
+                  value={branding.headingColor}
+                  onChange={(e) => setColor("headingColor", e.target.value)}
+                />
+              </div>
             </div>
             <div>
               <label>Text</label>
-              <input
-                type="color"
-                value={branding.textColor}
-                onChange={(e) => setColor("textColor", e.target.value)}
-              />
+              <div className="color-row">
+                <input
+                  type="color"
+                  value={branding.textColor}
+                  onChange={(e) => setColor("textColor", e.target.value)}
+                />
+                <input
+                  type="text"
+                  value={branding.textColor}
+                  onChange={(e) => setColor("textColor", e.target.value)}
+                />
+              </div>
             </div>
           </div>
           <div className="row-flex">
             <div>
               <label>Primärfarbe</label>
-              <input
-                type="color"
-                value={branding.primaryColor}
-                onChange={(e) => setColor("primaryColor", e.target.value)}
-              />
+              <div className="color-row">
+                <input
+                  type="color"
+                  value={branding.primaryColor}
+                  onChange={(e) => setColor("primaryColor", e.target.value)}
+                />
+                <input
+                  type="text"
+                  value={branding.primaryColor}
+                  onChange={(e) => setColor("primaryColor", e.target.value)}
+                />
+              </div>
             </div>
             <div>
               <label>Sekundärfarbe</label>
-              <input
-                type="color"
-                value={branding.secondaryColor}
-                onChange={(e) => setColor("secondaryColor", e.target.value)}
-              />
+              <div className="color-row">
+                <input
+                  type="color"
+                  value={branding.secondaryColor}
+                  onChange={(e) => setColor("secondaryColor", e.target.value)}
+                />
+                <input
+                  type="text"
+                  value={branding.secondaryColor}
+                  onChange={(e) => setColor("secondaryColor", e.target.value)}
+                />
+              </div>
             </div>
           </div>
 
