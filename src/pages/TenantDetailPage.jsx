@@ -27,7 +27,7 @@ export default function TenantDetailPage() {
             ...data.content,
           },
           email_config: {
-            senderName: "",
+            displayName: "",
             replyTo: "",
             enabled: false,
             ...data.email_config,
@@ -162,25 +162,21 @@ export default function TenantDetailPage() {
                 Automatischen Mailversand an Leads aktivieren
               </label>
 
-              <label style={{ marginTop: 12 }}>Absendername</label>
-              <div className="row-flex" style={{ alignItems: "center" }}>
-                <input
-                  value={tenant.email_config?.senderName || ""}
-                  onChange={(e) =>
-                    setTenant({
-                      ...tenant,
-                      email_config: {
-                        ...tenant.email_config,
-                        senderName: e.target.value.toLowerCase().replace(/[^a-z0-9.-]/g, ""),
-                      },
-                    })
-                  }
-                  placeholder="z.B. anette"
-                />
-                <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>
-                  @service.premium-weinfinder.de
-                </span>
-              </div>
+              <label style={{ marginTop: 12 }}>Absendername (Anzeigename im Postfach)</label>
+              <input
+                value={tenant.email_config?.displayName || ""}
+                onChange={(e) =>
+                  setTenant({
+                    ...tenant,
+                    email_config: { ...tenant.email_config, displayName: e.target.value },
+                  })
+                }
+                placeholder={tenant.name}
+              />
+              <p style={{ fontSize: "0.8rem", marginTop: 4 }}>
+                Technische Absenderadresse ist immer das zentrale Weinfinder-Postfach.
+                Leer lassen, um „{tenant.name}" als Anzeigenamen zu nutzen.
+              </p>
 
               <label>Reply-To-Adresse (Antworten landen hier)</label>
               <input
