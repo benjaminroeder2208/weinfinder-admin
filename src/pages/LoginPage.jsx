@@ -26,9 +26,9 @@ export default function LoginPage({ onLogin }) {
       <h1>Weinfinder Admin</h1>
       {error && <div className="error-box">{error}</div>}
       <form onSubmit={handleSubmit}>
-        <label>E-Mail</label>
+        <label>E-Mail oder Benutzername</label>
         <input
-          type="email"
+          type="text"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
