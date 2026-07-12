@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { logout } from "../api/client.js";
 
-export default function Sidebar({ onLogout }) {
+export default function Sidebar({ open, onNavigate, onLogout }) {
   async function handleLogout() {
     try {
       await logout();
@@ -12,13 +12,24 @@ export default function Sidebar({ onLogout }) {
   }
 
   return (
-    <div className="sidebar" style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+    <div
+      className={`sidebar ${open ? "open" : ""}`}
+      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+    >
       <div style={{ flex: 1 }}>
         <h2>🍷 Weinfinder</h2>
-        <NavLink to="/tenants" className={({ isActive }) => (isActive ? "active" : "")}>
+        <NavLink
+          to="/tenants"
+          onClick={onNavigate}
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
           Shops
         </NavLink>
-        <NavLink to="/settings" className={({ isActive }) => (isActive ? "active" : "")}>
+        <NavLink
+          to="/settings"
+          onClick={onNavigate}
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
           Einstellungen
         </NavLink>
       </div>

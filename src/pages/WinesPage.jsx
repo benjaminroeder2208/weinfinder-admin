@@ -220,6 +220,7 @@ export default function WinesPage() {
         </div>
       </div>
 
+      <div className="table-scroll">
       <table>
         <thead>
           <tr>
@@ -276,6 +277,7 @@ export default function WinesPage() {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

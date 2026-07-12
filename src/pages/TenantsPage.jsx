@@ -23,6 +23,7 @@ export default function TenantsPage() {
           + Neuer Shop
         </Link>
       </div>
+      <div className="table-scroll">
       <table>
         <thead>
           <tr>
@@ -68,6 +69,7 @@ export default function TenantsPage() {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

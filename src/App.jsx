@@ -15,6 +15,7 @@ import WineFormPage from "./pages/WineFormPage.jsx";
 export default function App() {
   const [authChecked, setAuthChecked] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     // getTenants() ist eine geschützte Route - schlägt fehl, wenn kein gültiges Cookie vorliegt
@@ -34,7 +35,24 @@ export default function App() {
 
   return (
     <div className="layout">
-      <Sidebar onLogout={() => setAuthenticated(false)} />
+      <div className="mobile-topbar">
+        <button aria-label="Menü öffnen" onClick={() => setMobileMenuOpen(true)}>
+          ☰
+        </button>
+        <h2>🍷 Weinfinder</h2>
+      </div>
+
+      <div
+        className={`sidebar-overlay ${mobileMenuOpen ? "open" : ""}`}
+        onClick={() => setMobileMenuOpen(false)}
+      />
+
+      <Sidebar
+        open={mobileMenuOpen}
+        onNavigate={() => setMobileMenuOpen(false)}
+        onLogout={() => setAuthenticated(false)}
+      />
+
       <div className="content">
         <Routes>
           <Route path="/" element={<Navigate to="/tenants" replace />} />
