@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createTenant } from "../api/client.js";
+import { FONT_PAIRINGS } from "../fontPairings.js";
 
 const DEFAULT_BRANDING = {
   backgroundColor: "#1c1612",
@@ -8,6 +9,7 @@ const DEFAULT_BRANDING = {
   headingColor: "#f2ede8",
   primaryColor: "#a0bd00",
   secondaryColor: "#8b2615",
+  fontPairing: "playfair-lato",
   cardBackgroundColor: "#2a221c",
   cardTextColor: "#a89e94",
 };
@@ -70,6 +72,19 @@ export default function TenantNewPage() {
           </p>
 
           <h3 style={{ marginTop: 24 }}>Farben</h3>
+
+          <label>Schriftart</label>
+          <select
+            value={branding.fontPairing || "playfair-lato"}
+            onChange={(e) => setColor("fontPairing", e.target.value)}
+          >
+            {FONT_PAIRINGS.map((f) => (
+              <option key={f.id} value={f.id}>
+                {f.label}
+              </option>
+            ))}
+          </select>
+
           <div className="row-flex">
             <div>
               <label>Hintergrund</label>

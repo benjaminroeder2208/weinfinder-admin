@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getTenant, updateTenant, getAnalytics, getTenants } from "../api/client.js";
+import { FONT_PAIRINGS } from "../fontPairings.js";
 
 export default function TenantDetailPage() {
   const { id } = useParams();
@@ -255,6 +256,24 @@ export default function TenantDetailPage() {
           )}
 
           <h3 style={{ marginTop: 24 }}>Farben</h3>
+
+          <label>Schriftart</label>
+          <select
+            value={tenant.branding?.fontPairing || "playfair-lato"}
+            onChange={(e) =>
+              setTenant({
+                ...tenant,
+                branding: { ...tenant.branding, fontPairing: e.target.value },
+              })
+            }
+          >
+            {FONT_PAIRINGS.map((f) => (
+              <option key={f.id} value={f.id}>
+                {f.label}
+              </option>
+            ))}
+          </select>
+
           <div className="row-flex">
             <div>
               <label>Hintergrund</label>
