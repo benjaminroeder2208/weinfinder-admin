@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getTenant, updateTenant, getAnalytics, getTenants } from "../api/client.js";
 import { FONT_PAIRINGS } from "../fontPairings.js";
+import QrCodeCard from "../components/QrCodeCard.jsx";
 
 export default function TenantDetailPage() {
   const { id } = useParams();
@@ -123,6 +124,8 @@ export default function TenantDetailPage() {
           </button>
         </div>
       </div>
+
+      <QrCodeCard url={publicUrl} slug={tenant.slug} />
 
       <div className="card">
         <h3 style={{ marginTop: 0 }}>Shop-Einstellungen</h3>
