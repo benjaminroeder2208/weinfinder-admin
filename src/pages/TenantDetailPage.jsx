@@ -147,9 +147,13 @@ export default function TenantDetailPage() {
             <option value="demo">Demo</option>
             <option value="pilot">Pilot</option>
             <option value="enterprise">Enterprise</option>
+            <option value="portal">Portal (öffentliches Verzeichnis)</option>
           </select>
           <p style={{ fontSize: "0.8rem", marginTop: 4 }}>
             Lead-Gen-Formular ist bei „Basis" und „Pilot" ausgeblendet, sonst sichtbar.
+            Bei „Portal" gelten Leads, Statistiken und diese Berechtigung immer
+            für das Portal selbst - unabhängig davon, von welchem Weingut der
+            empfohlene Wein stammt. Nur das Wein-Sortiment wird kombiniert.
           </p>
 
           {["demo", "premium", "enterprise"].includes(tenant.pricing_tier) && (
@@ -201,10 +205,12 @@ export default function TenantDetailPage() {
             </>
           )}
 
-          {tenant.pricing_tier === "demo" && (
+          {["demo", "portal"].includes(tenant.pricing_tier) && (
             <>
               <label style={{ marginTop: 16 }}>
-                Kunden, deren Weine im Demo-Dropdown wählbar sind
+                {tenant.pricing_tier === "portal"
+                  ? "Kunden, deren Weine im Portal automatisch kombiniert werden"
+                  : "Kunden, deren Weine im Demo-Dropdown wählbar sind"}
               </label>
               <div
                 style={{
@@ -618,6 +624,34 @@ export default function TenantDetailPage() {
                 </div>
                 <div className="stat-label">Meistempfohlener Wein</div>
               </div>
+              <div className="stat-card">
+                <div className="stat-value">
+                  {analytics.last30Days > 0
+                    ? `${Math.min(
+                        100,
+                        Math.round(
+                          ((analytics.clickedResultsLast30Days ?? 0) / analytics.last30Days) * 100
+                        )
+                      )} %`
+                    : "–"}
+                </div>
+                <div className="stat-label">
+                  Empfehlungen mit Klick auf „Zum Wein" (
+                  {analytics.clickedResultsLast30Days ?? 0} von {analytics.last30Days})
+                </div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-value">
+                  {(analytics.feedbackLast30Days?.total ?? 0) > 0
+                    ? `${Math.round(
+                        (analytics.feedbackLast30Days.helpful / analytics.feedbackLast30Days.total) * 100
+                      )} %`
+                    : "–"}
+                </div>
+                <div className="stat-label">
+                  Empfehlung hilfreich ({analytics.feedbackLast30Days?.total ?? 0} Bewertungen)
+                </div>
+              </div>
             </div>
             <div className="row-flex" style={{ marginTop: 16 }}>
               <div>
@@ -635,6 +669,18 @@ export default function TenantDetailPage() {
                     {s.value} ({s.count})
                   </div>
                 ))}
+              </div>
+              <div>
+                <div className="stat-label">Meistgeklickte Weine</div>
+                {(analytics.topClickedWines ?? []).length === 0 ? (
+                  <div>–</div>
+                ) : (
+                  analytics.topClickedWines.map((w) => (
+                    <div key={w.name}>
+                      {w.name} ({w.count})
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           </>
