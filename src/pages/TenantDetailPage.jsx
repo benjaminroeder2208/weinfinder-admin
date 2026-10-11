@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { getTenant, updateTenant, getAnalytics, getTenants } from "../api/client.js";
 import { FONT_PAIRINGS } from "../fontPairings.js";
 import QrCodeCard from "../components/QrCodeCard.jsx";
+import { buildEmbedSnippet } from "../embedSnippet.js";
 
 export default function TenantDetailPage() {
   const { id } = useParams();
@@ -75,7 +76,7 @@ export default function TenantDetailPage() {
   if (!tenant) return <p>Lädt...</p>;
 
   const publicUrl = `https://app.premium-weinfinder.de/w/${tenant.slug}`;
-  const iframeSnippet = `<iframe src="${publicUrl}" style="width:100%; height:800px; border:none;" title="Weinfinder"></iframe>`;
+  const iframeSnippet = buildEmbedSnippet(publicUrl);
 
   return (
     <div>
@@ -107,13 +108,20 @@ export default function TenantDetailPage() {
           </a>
         </div>
 
-        <label style={{ marginTop: 16 }}>iFrame-Einbettungscode</label>
+        <label style={{ marginTop: 16 }}>
+          Einbettungscode (iFrame mit automatischer Höhe)
+        </label>
         <textarea
           readOnly
           value={iframeSnippet}
           onClick={(e) => e.target.select()}
-          style={{ fontFamily: "monospace", fontSize: "0.8rem", minHeight: 60 }}
+          style={{ fontFamily: "monospace", fontSize: "0.8rem", minHeight: 260 }}
         />
+        <p style={{ fontSize: "0.8rem", marginTop: 4 }}>
+          Für WordPress gibt es stattdessen das Plugin „Weinfinder – Einbettung"
+          (Shortcode <code>[weinfinder]</code>). Das Skript im Code passt die Höhe
+          des iFrames automatisch an den Inhalt an; ohne das Skript bleibt sie bei 800px.
+        </p>
         <div className="form-actions">
           <button
             className="btn btn-secondary"
